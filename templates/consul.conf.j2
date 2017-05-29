@@ -24,8 +24,11 @@ script
 {% if consul_dynamic_bind %}
     -bind=$BIND \
 {% endif %}
-{% if consul_client_address_bind %}
+{% if consul_client_address_bind and consul_client_address == "127.0.0.1" %}
     -client=$CLIENT_BIND \
+{% endif %}
+{% if consul_client_address_bind and consul_client_address != "127.0.0.1" %}
+    -client={{ consul_client_address }} \
 {% endif %}
     -config-dir={{ consul_config_dir }} \
     -config-file={{ consul_config_file }}
